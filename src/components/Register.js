@@ -10,8 +10,35 @@ import "./Register.css";
 
 const Register = () => {
   const { enqueueSnackbar } = useSnackbar();
-
-
+  const [isLoading,setisloading]=useState(false);
+  const [username,setUsername]=useState("");
+  const [password,setPassword]=useState("");
+  const [confirmPassword,setConfirmPassword]=useState("");
+  const register=async(formData)=>{
+    setisloading(true);
+    if(validateInput(formData)){
+    try{
+      let url=`${config.endpoint}/auth/register`;
+      const response=await axios.post(url,{
+        username:formData.username,
+        password:formData.password,
+      });
+    if(response.data.success){
+      enqueueSnackbar("Registered Successfully",{variant:"success"})
+    }
+    setisloading(false);
+  }
+    catch(e){
+      setisloading(false);
+      if(e.messgae==="Network Error"){
+        enqueueSnackbar("Something went wrong. Check that the backend server is running,reachable and return valid JSON",{variant:"error"});
+      }
+      else{
+        enqueueSnackbar(e.response.data.message,{variant:"error"});
+      }
+    }
+  }  
+  }
   // TODO: CRIO_TASK_MODULE_REGISTER - Implement the register function
   /**
    * Definition for register handler
@@ -35,8 +62,7 @@ const Register = () => {
    *      "message": "Username is already taken"
    * }
    */
-  const register = async (formData) => {
-  };
+  
 
   // TODO: CRIO_TASK_MODULE_REGISTER - Implement user input validation logic
   /**
@@ -57,6 +83,33 @@ const Register = () => {
    * -    Check that confirmPassword field has the same value as password field - Passwords do not match
    */
   const validateInput = (data) => {
+    if(data.username.length ===0){
+      console.log(data.username);
+      enqueueSnackbar("Username is a required field",{variant:"warning"});
+      return false;
+    }
+    else if(data.username.length < 6){
+      enqueueSnackbar("Username must be at least 6 characters",{variant:"warning"});
+      return false;
+    }
+
+    else if(data.password.length ===0){
+      enqueueSnackbar("Password is a required field",{variant:"warning"});
+      return false;
+    }
+    
+    else if(data.password.length<6){
+      enqueueSnackbar("Password must be at least 6 characters",{variant:"warning"});
+      return false;
+    }
+
+    else if(data.password !==data.confirmPassword){
+      enqueueSnackbar("Passwords do not match",{variant:"warning"});
+      return false;
+    }
+    else{
+    return true;
+    } 
   };
 
   return (
@@ -77,6 +130,7 @@ const Register = () => {
             title="Username"
             name="username"
             placeholder="Enter Username"
+            onChange={(event)=>setUsername(event.target.value)}
             fullWidth
           />
           <TextField
@@ -88,6 +142,7 @@ const Register = () => {
             helperText="Password must be atleast 6 characters length"
             fullWidth
             placeholder="Enter a password with minimum 6 characters"
+            onChange={(event)=>setPassword(event.target.value)}
           />
           <TextField
             id="confirmPassword"
@@ -95,14 +150,24 @@ const Register = () => {
             label="Confirm Password"
             name="confirmPassword"
             type="password"
+            onChange={(event)=>setConfirmPassword(event.target.value)}
             fullWidth
           />
-           <Button className="button" variant="contained">
+          {isLoading?(<Box display='flex' justifyContent="center" alignItems="center"> 
+              <CircularProgress size={25} color="primary"></CircularProgress>
+            </Box>):(
+            <Button className="button" 
+            variant="contained"
+            onClick={()=>register({
+              username:username,
+              password:password,
+              confirmPassword:confirmPassword,
+            })}>
             Register Now
-           </Button>
+           </Button> )}
           <p className="secondary-action">
             Already have an account?{" "}
-             <a className="link" href="#">
+             <a className="link" href="../../public/index.html">
               Login here
              </a>
           </p>
