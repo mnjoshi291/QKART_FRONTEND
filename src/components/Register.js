@@ -7,6 +7,7 @@ import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
 import "./Register.css";
+import { useHistory} from "react-router-dom";
 
 const Register = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -14,6 +15,7 @@ const Register = () => {
   const [username,setUsername]=useState("");
   const [password,setPassword]=useState("");
   const [confirmPassword,setConfirmPassword]=useState("");
+  const history=useHistory();
   const register=async(formData)=>{
     setisloading(true);
     if(validateInput(formData)){
@@ -24,7 +26,8 @@ const Register = () => {
         password:formData.password,
       });
     if(response.data.success){
-      enqueueSnackbar("Registered Successfully",{variant:"success"})
+      enqueueSnackbar("Registered Successfully",{variant:"success"});
+      history.push("/login");
     }
     setisloading(false);
   }
@@ -163,17 +166,20 @@ const Register = () => {
             })}>
             Register Now
            </Button> )}
-          <p className="secondary-action">
+          {/* <p className="secondary-action">
             Already have an account?{" "}
              <a className="link" href="../../public/index.html">
               Login here
              </a>
             fullWidth
-          />
+          /> */}
           <p className="secondary-action">
             Already have an account?{" "}
+            <a className="link" href="/login">
+              Login here
+             </a>
           </p>
-          </p>
+          {/* </p> */}
         </Stack>
       </Box>
       <Footer />
