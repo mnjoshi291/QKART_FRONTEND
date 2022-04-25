@@ -3,6 +3,7 @@ import ipConfig from "./ipConfig.json";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Products from "./components/Products";
+
 export const config = {
   endpoint: `http://${ipConfig.workspaceIp}:8082/api/v1`,
 };
@@ -18,10 +19,7 @@ function App() {
          <Route path="/" component={Products} />
        </Switch>
        </Router>),
-      {/* TODO: CRIO_TASK_MODULE_LOGIN - To add configure routes and their mapping */}
-          {/* <Register />
-          <Login/>  */}
-    </div>
+       </div>
   );
 }
 
