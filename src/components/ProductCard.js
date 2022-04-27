@@ -1,5 +1,6 @@
 import { AddShoppingCartOutlined } from "@mui/icons-material";
 import {
+
   Button,
   Card,
   CardActions,
@@ -11,24 +12,37 @@ import {
 import React from "react";
 import "./ProductCard.css";
 
-const ProductCard = ({ product, handleAddToCart }) => {
-    return (
-      <Card variant="outlined" className="card">
-        <CardMedia component="img" image={product.image} alt={product.name} />
-        <CardContent>
-          <Typography variant="h5" component="h5">
-            {product.name}
-          </Typography>
-          <Typography variant="h5" component="h5">
-            ${product.cost}
-          </Typography>
-          <Rating name="read-only" value={product.rating} readOnly />
-        </CardContent>
-        <CardActions className="card-actions">
-          <Button className="card-button" variant="contained" startIcon={<AddShoppingCartOutlined/>} >ADD TO CART</Button>
-        </CardActions>
-      </Card>
-    );
+const ProductCard = ({product, handleAddToCart }) => {
+  return (
+    <Card className="card">
+      <CardMedia
+        component="img"
+        height="140"
+        image={product.image}
+        alt="Video"
+      />
+      <CardContent>
+        <Typography color="text.secondary" gutterBottom>
+          {product.name}
+        </Typography>
+
+        <Typography gutterBottom variant="h5">
+          ${product.cost}
+        </Typography>
+        
+        <Typography gutterBottom>
+        <Rating value={product.rating} readOnly />
+        </Typography>
+        
+      </CardContent>
+      <CardActions>
+      <Button className="card-button" variant="contained" fullWidth onClick={handleAddToCart}>
+        ADD TO CART</Button>
+      </CardActions>
+     
+    </Card>
+  );
 };
 
 export default ProductCard;
+

@@ -48,8 +48,8 @@ const Checkout = () => {
 
 
 
-
-
+const [items,setItems]=useState([]);
+const [products,setProducts]=useState([]);
 
 
 
