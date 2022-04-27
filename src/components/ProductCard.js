@@ -29,6 +29,6 @@ const ProductCard = ({ product, handleAddToCart }) => {
         </CardActions>
       </Card>
     );
-  };
+};
 
 export default ProductCard;

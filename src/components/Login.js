@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -124,11 +125,12 @@ const Login = () => {
    * -    `username` field in localStorage can be used to store the username that the user is logged in as
    * -    `balance` field in localStorage can be used to store the balance amount in the user's wallet
    */
-  const persistLogin = (token, username, balance) => {
+  const persistLogin = (token, username, balance) =>{ 
     localStorage.setItem("token",token);
     localStorage.setItem("username",username);
     localStorage.setItem("balance",balance);
   };
+
   return (
     <Box
       display="flex"

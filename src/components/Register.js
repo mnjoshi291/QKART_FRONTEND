@@ -43,7 +43,6 @@ const Register = () => {
   }  
   }
   // TODO: CRIO_TASK_MODULE_REGISTER - Implement the register function
-
   /**
    * Definition for register handler
    * - Function to be called when the user clicks on the register button or submits the register form
@@ -66,7 +65,6 @@ const Register = () => {
    *      "message": "Username is already taken"
    * }
    */
-  // TODO: CRIO_TASK_MODULE_REGISTER - Implement user input validation logic
 
   /**
    * Validate the input values so that any bad or illegal values are not passed to the backend.
@@ -179,12 +177,6 @@ const Register = () => {
             <a className="link" href="/login">
               Login here
              </a>
-          </p>
-          {/* </p> */}
-            fullWidth
-          />
-          <p className="secondary-action">
-            Already have an account?{" "}
           </p>
         </Stack>
       </Box>

@@ -1,6 +1,7 @@
 import Register from "./components/Register";
 import ipConfig from "./ipConfig.json";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Login from "./components/Login";
 import Products from "./components/Products";
 
@@ -10,7 +11,6 @@ export const config = {
 
 function App() {
   return (
-    
     <div className="App">
 <Router>
         <Switch>
@@ -19,8 +19,7 @@ function App() {
          <Route path="/" component={Products} />
        </Switch>
        </Router>),
-       </div>
-  );
+       </div>)
 }
 
 export default App;
