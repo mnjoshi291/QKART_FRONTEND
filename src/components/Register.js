@@ -87,7 +87,6 @@ const Register = () => {
    */
   const validateInput = (data) => {
     if(data.username.length ===0){
-      console.log(data.username);
       enqueueSnackbar("Username is a required field",{variant:"warning"});
       return false;
     }

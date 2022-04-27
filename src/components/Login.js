@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -129,8 +129,6 @@ const Login = () => {
     localStorage.setItem("username",username);
     localStorage.setItem("balance",balance);
   };
-let test=localStorage.getItem("username");
-console.log(test);
   return (
     <Box
       display="flex"
@@ -141,7 +139,7 @@ console.log(test);
       <Header hasHiddenAuthButtons />
       <Box className="content">
         <Stack spacing={2} className="form">
-          <h2 classname="title">Login</h2>
+          <h2 className="title">Login</h2>
           <TextField
             id="username"
             label="Username"
