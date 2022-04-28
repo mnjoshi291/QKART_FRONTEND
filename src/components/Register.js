@@ -177,6 +177,8 @@ const Register = () => {
             <a className="link" href="/login">
               Login here
              </a>
+            fullWidth
+          />
           </p>
         </Stack>
       </Box>

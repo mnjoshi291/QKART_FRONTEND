@@ -371,5 +371,4 @@ return res.data;
     </div>
   );
 };
-
 export default Products;

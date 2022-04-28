@@ -60,5 +60,4 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
       );
   }
 };
-
 export default Header;

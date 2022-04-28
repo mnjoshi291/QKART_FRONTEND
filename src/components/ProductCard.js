@@ -1,6 +1,5 @@
 import { AddShoppingCartOutlined } from "@mui/icons-material";
 import {
-
   Button,
   Card,
   CardActions,
@@ -39,10 +38,8 @@ const ProductCard = ({product, handleAddToCart }) => {
       <Button className="card-button" variant="contained" fullWidth onClick={handleAddToCart}>
         ADD TO CART</Button>
       </CardActions>
-     
-    </Card>
+     </Card>
   );
 };
 
 export default ProductCard;
-

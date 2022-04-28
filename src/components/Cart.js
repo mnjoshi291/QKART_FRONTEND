@@ -50,9 +50,6 @@ import "./Cart.css";
 export const generateCartItemsFrom = (cartData, productsData) => {
 
   if (!cartData) return;
-
-
-
   const finalCartData = cartData.map((item) => ({
     ...item,
     ...productsData.find((prod) => item.productId === prod._id),
@@ -79,9 +76,6 @@ export const getTotalCartValue = (items = []) => {
     .reduce((total, n) => total + n);
   return total;
 };
-
-
-//};
 
 // TODO: CRIO_TASK_MODULE_CHECKOUT - Implement function to return total cart quantity
 /**
@@ -178,100 +172,98 @@ const Cart = ({
   
   return (
     
-<>
-<Box className="cart">
-        {/* TODO: CRIO_TASK_MODULE_CART - Display view for each cart item with non-zero quantity */}
-       {items.map(item =>
-<Box key={item.productId}>
-  {item.qty>0?
-<Box display="flex" alignItems="flex-start" padding="1rem">
-    <Box className="image-container">
-        <img
-            // Add product image
-            src={item.image}
-            // Add product name as alt eext
-            alt={item.name}
-            width="100%"
-            height="100%"
-        />
-    </Box>
-    <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="space-between"
-        height="6rem"
-        paddingX="1rem"
-    >
-        <div>{item.name}</div>
+    <>
+    <Box className="cart">
+            {/* TODO: CRIO_TASK_MODULE_CART - Display view for each cart item with non-zero quantity */}
+           {items.map(item =>
+    <Box key={item.productId}>
+      {item.qty>0?
+    <Box display="flex" alignItems="flex-start" padding="1rem">
+        <Box className="image-container">
+            <img
+                // Add product image
+                src={item.image}
+                // Add product name as alt eext
+                alt={item.name}
+                width="100%"
+                height="100%"
+            />
+        </Box>
         <Box
             display="flex"
+            flexDirection="column"
             justifyContent="space-between"
-            alignItems="center"
+            height="6rem"
+            paddingX="1rem"
         >
-        <ItemQuantity
-        // Add required props by checking implementation
-        handleAdd ={async ()=>
-          await handleQuantity(localStorage.getItem('token'),
-          item,
-          item.productId,
-          products,
-          item.qty + 1)}
-          handleDelete ={async ()=>
-            await handleQuantity(localStorage.getItem('token'),
-            item,
-            item.productId,
-            products,
-            item.qty - 1)}
-        value={item.qty}
-        />
-        <Box padding="0.5rem" fontWeight="700">
-            ${item.cost}
+            <div>{item.name}</div>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+            >
+            <ItemQuantity
+            // Add required props by checking implementation
+            handleAdd ={async ()=>
+              await handleQuantity(localStorage.getItem('token'),
+              item,
+              item.productId,
+              products,
+              item.qty + 1)}
+              handleDelete ={async ()=>
+                await handleQuantity(localStorage.getItem('token'),
+                item,
+                item.productId,
+                products,
+                item.qty - 1)}
+            value={item.qty}
+            />
+            <Box padding="0.5rem" fontWeight="700">
+                ${item.cost}
+            </Box>
+            </Box>
         </Box>
-        </Box>
+    </Box>:null}
     </Box>
-</Box>:null}
-</Box>
-       )}
-
-        <Box
-          padding="1rem"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Box color="#3C3C3C" alignSelf="center">
-            Order total
+           )}
+    
+            <Box
+              padding="1rem"
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box color="#3C3C3C" alignSelf="center">
+                Order total
+              </Box>
+              <Box
+                color="#3C3C3C"
+                fontWeight="700"
+                fontSize="1.5rem"
+                alignSelf="center"
+                data-testid="cart-total"
+              >
+                ${getTotalCartValue(items)}
+              </Box>
+            </Box>
+    
+            <Box display="flex" justifyContent="flex-end" className="cart-footer">
+              <Button
+                color="primary"
+                variant="contained"
+                startIcon={<ShoppingCart />}
+                className="checkout-btn"
+                onClick={routeChangeCheckout}
+              >
+                Checkout
+              </Button>
+            </Box>
           </Box>
-          <Box
-            color="#3C3C3C"
-            fontWeight="700"
-            fontSize="1.5rem"
-            alignSelf="center"
-            data-testid="cart-total"
-          >
-            ${getTotalCartValue(items)}
-          </Box>
-        </Box>
-
-        <Box display="flex" justifyContent="flex-end" className="cart-footer">
-          <Button
-            color="primary"
-            variant="contained"
-            startIcon={<ShoppingCart />}
-            className="checkout-btn"
-            onClick={routeChangeCheckout}
-          >
-            Checkout
-          </Button>
-        </Box>
-      </Box>
-    </>
-
-  );
-//})}
-
-};
-
-
-
-export default Cart;
+        </>
+    
+      );
+    //})}
+    
+    };
+  export default Cart;
+    
