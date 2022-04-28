@@ -58,51 +58,6 @@ export const generateCartItemsFrom = (cartData, productsData) => {
     ...productsData.find((prod) => item.productId === prod._id),
   }));
   return finalCartData;
-
-  //console.log("Cart3",cartData);
-  // console.log("Cart4",productsData);
-  // let filteredFinalArray=[];
-  // cartData.forEach((data)=> {
-      
-  //      let filteredCartArray =[];
-  //      let filteredArray=[];
-  //      productsData.forEach((prodData)=>{
-  //        if(data.productId === prodData._id){
-  //         filteredCartArray.push(prodData);
-  //         //let a = 
-  //         filteredArray.push(data);
-  //         //filteredFinalArray.push(prodData,data.productId,data.qty);
-  //         //filteredFinalArray.concat(data);
-  //         //console.log("finalcartarray",filteredFinalArray);
-  //         //let abc = {prodData,...data};
-  //         filteredFinalArray.push({...prodData,...data});
-  //         //filteredFinalArray.push(filteredCartArray,filteredArray);
-  //         //const a = {...prodData, ...data};
-          
-  //        }
-  //      })
-       
-       
-
-
-      
-
-  //     //  filteredArray =  data.filter(
-  //     //    (cartData)=>{
-  //     //      if(data._id === cartData.productId){
-  //     //        console.log("Afterforeach",cartData);
-  //     //      }
-  //     //    }
-  //     //  );
-  //      //console.log("FullDetailsCart",filteredArray);
-  //      //return filteredFinalArray.push(filteredArray);
-     
-  //  })
-  //  //console.log("finalcartarray",filteredFinalArray);
-  //  return filteredFinalArray;
-  
-
-
 };
 
 /**
@@ -119,23 +74,9 @@ export const getTotalCartValue = (items = []) => {
   if(!items.length){
     return 0;
   }
-  // let total=0;
-  // let cost=0;
-  // //const total = items.map((data)=> data.cost * data.qty)
-  
-  // items.forEach(data=>{
-  //  cost = data.cost * data.qty;
-  //  //console.log("cost",cost)
-  //  total += cost;
-  //  //console.log("costfinal",total)
-  // })
-  
-  // return total;
-
   const total = items
     .map((item) => item.cost * item.qty)
     .reduce((total, n) => total + n);
-
   return total;
 };
 
@@ -216,20 +157,6 @@ const Cart = ({
 }) => {
 
   const history= useHistory();
-  //const [cartData,setCartData] = useState([]);
-  //console.log("Cart1",products);
-  //console.log("Cart2",items);
-  //let array=[];
-  //let a =[];
-  // if(products.length && items.length){
-  //   array = generateCartItemsFrom(items,products);
-    
-  // }
-  // array.push(a);
-  //setCartData(array);
-
-  //console.log("cartArray",array);
-
   const routeChangeCheckout = () =>{ 
     
     history.push('/checkout');
