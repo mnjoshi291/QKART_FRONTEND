@@ -31,7 +31,6 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
       </Box>);
   }
   else{
-    console.log(children);
       return(
         <Box className="header">
         <Box className="header-title">

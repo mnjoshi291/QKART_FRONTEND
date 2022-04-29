@@ -48,7 +48,6 @@ import "./Cart.css";
  *
  */
 export const generateCartItemsFrom = (cartData, productsData) => {
-
   if (!cartData) return;
   const finalCartData = cartData.map((item) => ({
     ...item,
@@ -74,9 +73,9 @@ export const getTotalCartValue = (items = []) => {
   const total = items
     .map((item) => item.cost * item.qty)
     .reduce((total, n) => total + n);
+
   return total;
 };
-
 // TODO: CRIO_TASK_MODULE_CHECKOUT - Implement function to return total cart quantity
 /**
  * Return the sum of quantities of all products added to the cart
@@ -89,6 +88,11 @@ export const getTotalCartValue = (items = []) => {
  *
  */
 export const getTotalItems = (items = []) => {
+  if (!items.length) return 0;
+  const totalItem = items.map((item) => item.qty)
+    .reduce((totalItem, n) => totalItem + n);
+
+  return totalItem;
 };
 
 // TODO: CRIO_TASK_MODULE_CHECKOUT - Add static quantity view for Checkout page cart
@@ -112,7 +116,19 @@ const ItemQuantity = ({
   value,
   handleAdd,
   handleDelete,
+  isReadOnly
 }) => {
+
+  if(isReadOnly){
+    return (
+      <Stack direction="row" alignItems="center">
+        <Box padding="0.5rem" data-testid="item-qty">
+          Qty: {value}
+        </Box>
+      </Stack>
+    );
+
+  }
   return (
     <Stack direction="row" alignItems="center">
       <IconButton size="small" color="primary" onClick={handleDelete}>
@@ -148,15 +164,13 @@ const Cart = ({
   products,
   items = [],
   handleQuantity,
+  isReadOnly
 }) => {
-
   const history= useHistory();
   const routeChangeCheckout = () =>{ 
     
     history.push('/checkout');
   }
-  
-
   if (!items.length) {
     return (
       <Box className="cart empty">
@@ -167,103 +181,138 @@ const Cart = ({
       </Box>
     );
   }
-
-  
-  
   return (
-    
-    <>
-    <Box className="cart">
-            {/* TODO: CRIO_TASK_MODULE_CART - Display view for each cart item with non-zero quantity */}
-           {items.map(item =>
-    <Box key={item.productId}>
-      {item.qty>0?
-    <Box display="flex" alignItems="flex-start" padding="1rem">
-        <Box className="image-container">
-            <img
-                // Add product image
-                src={item.image}
-                // Add product name as alt eext
-                alt={item.name}
-                width="100%"
-                height="100%"
-            />
-        </Box>
+<>
+<Box className="cart">
+        {/* TODO: CRIO_TASK_MODULE_CART - Display view for each cart item with non-zero quantity */}
+       {items.map(item =>
+<Box key={item.productId}>
+  {item.qty>0?
+<Box display="flex" alignItems="flex-start" padding="1rem">
+    <Box className="image-container">
+        <img
+            // Add product image
+            src={item.image}
+            // Add product name as alt eext
+            alt={item.name}
+            width="100%"
+            height="100%"
+        />
+    </Box>
+    <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        height="6rem"
+        paddingX="1rem"
+    >
+        <div>{item.name}</div>
         <Box
             display="flex"
-            flexDirection="column"
             justifyContent="space-between"
-            height="6rem"
-            paddingX="1rem"
+            alignItems="center"
         >
-            <div>{item.name}</div>
-            <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-            >
-            <ItemQuantity
-            // Add required props by checking implementation
-            handleAdd ={async ()=>
-              await handleQuantity(localStorage.getItem('token'),
-              item,
-              item.productId,
-              products,
-              item.qty + 1)}
-              handleDelete ={async ()=>
-                await handleQuantity(localStorage.getItem('token'),
-                item,
-                item.productId,
-                products,
-                item.qty - 1)}
+        <ItemQuantity
+        // Add required props by checking implementation
+        handleAdd ={async ()=>
+          await handleQuantity(localStorage.getItem('token'),
+          item,
+          item.productId,
+          products,
+          item.qty + 1)}
+          handleDelete ={async ()=>
+          await handleQuantity(localStorage.getItem('token'),
+            item,
+            item.productId,
+            products,
+            item.qty - 1)}
             value={item.qty}
-            />
-            <Box padding="0.5rem" fontWeight="700">
-                ${item.cost}
-            </Box>
-            </Box>
+            isReadOnly={isReadOnly}
+        />
+        <Box padding="0.5rem" fontWeight="700">
+            ${item.cost}
         </Box>
-    </Box>:null}
+        </Box>
     </Box>
-           )}
-    
-            <Box
-              padding="1rem"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Box color="#3C3C3C" alignSelf="center">
-                Order total
-              </Box>
-              <Box
-                color="#3C3C3C"
-                fontWeight="700"
-                fontSize="1.5rem"
-                alignSelf="center"
-                data-testid="cart-total"
-              >
-                ${getTotalCartValue(items)}
-              </Box>
-            </Box>
-    
-            <Box display="flex" justifyContent="flex-end" className="cart-footer">
-              <Button
-                color="primary"
-                variant="contained"
-                startIcon={<ShoppingCart />}
-                className="checkout-btn"
-                onClick={routeChangeCheckout}
-              >
-                Checkout
-              </Button>
-            </Box>
+</Box>:null}
+</Box>
+       )}
+
+        <Box
+          padding="1rem"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box color="#3C3C3C" alignSelf="center">
+            Order total
           </Box>
-        </>
-    
-      );
-    //})}
-    
-    };
-  export default Cart;
-    
+          <Box
+            color="#3C3C3C"
+            fontWeight="700"
+            fontSize="1.5rem"
+            alignSelf="center"
+            data-testid="cart-total"
+          >
+            ${getTotalCartValue(items)}
+          </Box>
+        </Box>
+       {!isReadOnly?
+        <Box display="flex" justifyContent="flex-end" className="cart-footer">
+          <Button
+            color="primary"
+            variant="contained"
+            startIcon={<ShoppingCart />}
+            className="checkout-btn"
+            onClick={routeChangeCheckout}
+          >
+            Checkout
+          </Button>
+        </Box> : null
+        }
+      </Box>
+{isReadOnly?   ( 
+<Box padding="1rem" paddingY="0.5rem" className="cart">
+<Box><h3>Order Details</h3></Box>
+    <Box
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        paddingY="0.5rem"
+    >
+      <Box>Products</Box>
+      <Box>{getTotalItems(items)}</Box>
+      </Box>
+      <Box
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        paddingY="0.5rem"
+      >
+      <Box>Subtotal</Box>
+      <Box>{getTotalCartValue(items)}</Box>
+      </Box>
+      <Box
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        paddingY="0.5rem"
+      >
+      <Box>Shipping Charges</Box>
+      <Box>$0</Box>
+      </Box>
+      <Box
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        paddingY="0.5rem"
+      >
+      <Box fontWeight="700">Total</Box>
+      <Box fontWeight="700" fontSize="1.5rem">${getTotalCartValue(items)}</Box>
+      </Box>
+</Box>) :null}
+    </>
+
+  );
+};
+export default Cart;

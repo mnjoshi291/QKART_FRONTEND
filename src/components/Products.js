@@ -71,7 +71,6 @@ const Products = () => {
    */
   const performAPICall = async () => {
     setIsloading(true);
-    console.log("BeforApiLoading",isLoading);
     try {let urldata = await axios.get(`${config.endpoint}/products`);
     setIsloading(false);
     
@@ -80,7 +79,6 @@ const Products = () => {
     setproductData(data);
 
     setFilteredproductData(data);
-    //console.log('afterloading', productData);
 
     } catch (e) {
       setIsloading(false);
@@ -88,11 +86,9 @@ const Products = () => {
       
       if (e.response && e.response.status === 500) {
         enqueueSnackbar(e.response.data.message, { variant: "error" });
-                console.log(e.response.message);}
+                }
       else {
         enqueueSnackbar("Something went wrong!", { variant: "error" });
-
-        console.log("Something went wrong!");
       }
     }
   };
@@ -112,7 +108,6 @@ const Products = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productData]);
   
-  //console.log(productData);
 
   // TODO: CRIO_TASK_MODULE_PRODUCTS - Implement search logic
   /**
@@ -137,7 +132,6 @@ const Products = () => {
       setFilteredproductData(resData);
     }
     //setFilteredproductData(resData);
-    //console.log("SearchApi",productData);
     else{
       setFilteredproductData([]);
     }
@@ -149,11 +143,10 @@ const Products = () => {
                 }
       if (e.response && e.response.status === 500) {
                   enqueueSnackbar(e.response.data.message, { variant: "error" });
-                          console.log(e.response.message);}
+                          }
       else {
         enqueueSnackbar("Something went wrong!", { variant: "error" });
 
-        //console.log("Something went wrong!");
       }
     }
     
@@ -186,7 +179,6 @@ const Products = () => {
       
       let url = `${config.endpoint}/cart`;
       //let response = await axios.post(url,formData);
-      //console.log(response.data);
       setToken(localStorage.getItem('token'));
       if(localStorage.getItem('token'))
       {
@@ -222,7 +214,6 @@ return res.data;
 
 
   const addToCart = async (token,items,productId,products,qty,flag={duplicate:false}) => {
-    console.log("token",token);
     if(!token){
       enqueueSnackbar("Login to add an item to the Cart",{ variant: "warning" });
       return;
@@ -266,7 +257,6 @@ return res.data;
 
 
 
-  //console.log('useEffect', productData)
   return (
     <div>
       <Header>
